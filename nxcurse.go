@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	bp "github.com/nexustix/boilerplate"
 	"github.com/nexustix/nxduck"
 	//"github.com/nexustixOLD_1/nxprovider"
 )
@@ -81,7 +82,7 @@ func GetCurseFilename(infoURL, fileEnding string) string {
 	return ""
 }
 
-func GetCurseDownloads(curseDownloadURL, version string) []nxprovider.ModDownload {
+func GetCurseDownloads(curseDownloadURL, version string) []bp.Download {
 	//fmt.Printf(">%s<\n", curseDownloadURL)
 
 	baseURL := curseDownloadURL
@@ -89,8 +90,10 @@ func GetCurseDownloads(curseDownloadURL, version string) []nxprovider.ModDownloa
 		baseURL = baseURL + "/"
 	}
 
-	var downloadsFound []nxprovider.ModDownload
-	var preReleaseFound []nxprovider.ModDownload
+	//var downloadsFound []nxprovider.ModDownload
+	//var preReleaseFound []nxprovider.ModDownload
+	var downloadsFound []bp.Download
+	var preReleaseFound []bp.Download
 
 	var downloadURL string
 	var downloadFileName string
@@ -132,10 +135,10 @@ func GetCurseDownloads(curseDownloadURL, version string) []nxprovider.ModDownloa
 		kind, _ := typeNode.Attr("title")
 		//fmt.Printf("<->kind>%s<\n", kind)
 
-		tmpModDownload := nxprovider.ModDownload{}
+		tmpModDownload := bp.Download{}
 
-		tmpModDownload.DownloadURL = downloadURL
-		tmpModDownload.FileName = downloadFileName
+		tmpModDownload.URL = downloadURL
+		tmpModDownload.Filename = downloadFileName
 
 		if kind == "Release" {
 			downloadsFound = append(downloadsFound, tmpModDownload)
