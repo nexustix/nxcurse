@@ -53,6 +53,7 @@ func FilterCurseResults(theResults []nxduck.SearchResult, prefix string, postfix
 
 // GetCurseFilename gets filename from download url
 //TODO (old code)
+//XXX deprecated
 func GetCurseFilename(infoURL, fileEnding string) string {
 	//get webpage html
 	//resp, err := http.Get(infoURL)
@@ -121,6 +122,7 @@ func GetCurseDownloads(curseDownloadURL, version string) []bp.Download {
 		downloadURL = baseURL + tmpSegments[len(tmpSegments)-1] + "/download"
 		//fmt.Printf("<->url>%s<\n", tmpSegments[0])
 
+		//HACK cheap-ish way to get filename without using too much traffic (is prone to errors but works most of the time)
 		downloadFileName = urlNode.Text()
 
 		if !strings.HasSuffix(downloadFileName, ".jar") && !strings.HasSuffix(downloadFileName, ".zip") {

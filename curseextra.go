@@ -2,6 +2,7 @@ package nxcurse
 
 import (
 	"log"
+	"net/http"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -74,4 +75,41 @@ func GetDependencies(ModPostfix string) []string {
 	   		}
 	   	}
 	*/
+}
+
+//HACK could cause unreasonable traffic (relative to information retrieved) if used too often
+//only retrieving filename from a querry is a bit wasteful (get filename during download instead if you want to save traffic)
+
+//GetFilenameFromDownloadURL retrieves filename from a curse URL (like https://minecraft.curseforge.com/projects/vending-machines-revamped/files/2266299/download")
+func GetFilenameFromDownloadURL(downURL string) string {
+
+	var filename string
+
+	tr := &http.Transport{
+		//TLSClientConfig:    &tls.Config{RootCAs: pool},
+		DisableCompression: true,
+	}
+	client := &http.Client{Transport: tr}
+	//resp, err := client.Get("https://minecraft.curseforge.com/projects/vending-machines-revamped/files/2266299/download")
+	//resp, err := client.Get("http://addons.cursecdn.com/files/2266/299/VendingMachinesRevamped_Alpha0.0.1_1.8.jar")
+	//resp, err := client.Get("https://addons-origin.cursecdn.com/files/2307/310/immcraft-1.9.4-1.1.7.jar") // does not work
+	resp, err := client.Get(downURL)
+	if err != nil {
+		//log.Fatal(err)
+		panic(err)
+	}
+	//bp.FailError(err)
+
+	//fmt.Printf("%#v\n", resp.Request.Header.Get("Referer"))
+
+	referer := resp.Request.Header.Get("Referer")
+
+	segments := strings.Split(referer, "/")
+
+	if len(segments) >= 1 {
+		filename = segments[len(segments)-1]
+	}
+
+	return filename
+
 }
