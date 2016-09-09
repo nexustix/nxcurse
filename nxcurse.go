@@ -15,7 +15,8 @@ func GenerateCurseSearchString(modName, gameName, pagename string) string {
 	//gameName := "Minecraft"
 
 	//return " t:(- Mods - Projects - " + gameName + " CurseForge) " + modName + " site:curseforge.com"
-	return fmt.Sprintf("t:(%s - %s - Mods - Projects - %s CurseForge) site:curseforge.com", pagename, modName, gameName)
+	//return fmt.Sprintf("t:(%s - %s - Mods - Projects - %s CurseForge) site:curseforge.com", pagename, modName, gameName)
+	return fmt.Sprintf("%s site:%s.curseforge.com", modName, gameName)
 }
 
 //FilterCurseResults filters curse results from search results
@@ -28,8 +29,9 @@ func FilterCurseResults(theResults []nxduck.SearchResult, prefix string, postfix
 	//postfix := "projects"
 
 	for _, v := range theResults {
-
-		if strings.HasPrefix(v.URL, "http://"+prefix+".curseforge.com/"+postfix) {
+		//if strings.HasPrefix(v.URL, "http://"+prefix+".curseforge.com/"+postfix) {
+		//fmt.Println(v.URL)
+		if strings.Contains(v.URL, prefix+".curseforge.com/"+postfix) {
 			//fmt.Println(v.URL)
 			tmpURL := rationalizeURL(v.URL)
 

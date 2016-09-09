@@ -4,7 +4,7 @@ import "github.com/nexustix/nxduck"
 
 //GetMinecraftModSearchphrase generates a Searchphrase for a minecraft mod
 func GetMinecraftModSearchphrase(modName string) string {
-	return GenerateCurseSearchString(modName, "Minecraft", "Files")
+	return GenerateCurseSearchString(modName, "minecraft", "Files")
 }
 
 //GetMinecraftModResults filters results for Mod urls
