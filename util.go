@@ -17,6 +17,8 @@ func deobfuscateURL(theURL string) string {
 	if err != nil {
 		log.Fatalf("http.Get => %v", err.Error())
 	}
+
+	defer resp.Body.Close()
 	// Request in the Response is the last URL the client tried to access.
 	finalURL := resp.Request.URL.String()
 

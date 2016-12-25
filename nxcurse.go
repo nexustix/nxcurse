@@ -65,6 +65,7 @@ func GetCurseFilename(infoURL, fileEnding string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	//find "links_main"
 	sel := doc.Find(".details-info")
 	for i := range sel.Nodes {
